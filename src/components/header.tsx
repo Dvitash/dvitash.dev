@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { useCollapse } from "react-collapsed";
 
 import { clamp, countKeys } from "@/lib/utils";
-import { getContributions } from "@/lib/github";
+import { fetchContributions, ContributionData } from "@/lib/github";
 
 import HeaderButton, { HeaderButtonType } from "@/components/headerbutton";
 import Container from "@/components/container";
 import Button from "@/components/button";
+import ContributionSquare from "@/components/contribution-square";
 
 const HEADER_BUTTONS: Array<HeaderButtonType> = [
   {
@@ -37,6 +38,7 @@ const TEXT_BUTTONS = countKeys(HEADER_BUTTONS, "text");
 export default function Header() {
   const [buttonCount, setButtonCount] = useState(HEADER_BUTTONS.length);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [mobileContributions, setMobileContributions] = useState<ContributionData[]>([]);
   const { getCollapseProps } = useCollapse({ isExpanded });
 
   function header() {
@@ -54,9 +56,9 @@ export default function Header() {
               setIsExpanded(!isExpanded);
             }}
           >
-            <span className={`bg-black dark:bg-white group-hover:bg-white dark:group-hover:bg-black block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "rotate-45 translate-y-1" : "-translate-y-0.5"}`} />
-            <span className={`bg-black dark:bg-white group-hover:bg-white dark:group-hover:bg-black block duration-100 transition-opacity ease-out w-[25px] h-[2px] my-0.5 ${isExpanded ? "opacity-0" : "opacity-100"}`} />
-            <span className={`bg-black dark:bg-white group-hover:bg-white dark:group-hover:bg-black block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "-rotate-45 -translate-y-1" : "translate-y-0.5"}`} />
+            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "rotate-45 translate-y-1" : "-translate-y-0.5"}`} />
+            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-100 transition-opacity ease-out w-[25px] h-[2px] my-0.5 ${isExpanded ? "opacity-0" : "opacity-100"}`} />
+            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "-rotate-45 -translate-y-1" : "translate-y-0.5"}`} />
           </Button>
         ),
       });
@@ -115,8 +117,6 @@ export default function Header() {
         </Container>
       );
     } else {
-      const contributions = getContributions(true);
-
       return (
         <Container className="absolute z-10 w-full duration-300" borders="lrb" style={{ marginTop: isExpanded ? 0 : -2 }}>
           <div {...getCollapseProps()}>
@@ -136,9 +136,9 @@ export default function Header() {
                   );
                 })}
 
-                <div className="mobileGithubContributions w-[calc(100%+76px)] h-[76px] grid grid-rows-5 grid-flow-col content-start overflow-hidden bg-white dark:bg-black">
-                  {contributions.map((contribution, index) => {
-                    return <div key={index} className="bg-black w-[15.2px] h-full dark:bg-white aspect-square" style={{ opacity: contribution }} />;
+                <div className="mobileGithubContributions w-[calc(100%+76px)] h-[76px] grid grid-rows-5 grid-flow-col content-start overflow-hidden bg-[var(--bg-primary)]">
+                  {mobileContributions.map((contribution, index) => {
+                    return <ContributionSquare key={index} contribution={contribution} />;
                   })}
                 </div>
               </div>
@@ -174,6 +174,14 @@ export default function Header() {
     return () => {
       window.removeEventListener("resize", () => updateHeaderSize());
     };
+  }, []);
+
+  useEffect(() => {
+    async function loadContributions() {
+      const contributions = await fetchContributions(true);
+      setMobileContributions(contributions);
+    }
+    loadContributions();
   }, []);
 
   if (typeof window !== "undefined") {

@@ -1,5 +1,11 @@
 import { clamp } from "./utils";
 
+export interface ContributionData {
+  opacity: number;
+  count: number;
+  date: string;
+}
+
 const TOKEN = process.env.GITHUB_TOKEN;
 const MOBILE_LENGTH = 210;
 const INTENSITY = 0.75;
@@ -11,6 +17,7 @@ query($userName:String!) {
 				weeks {
 					contributionDays {
 						contributionCount
+						date
 					}
 				}
 			}
@@ -19,22 +26,30 @@ query($userName:String!) {
 }`;
 const VARIABLES = `
 {
-	"userName": "DervexDev"
+	"userName": "Dvitash"
 }`;
 
-function getDummyData(length?: number): Array<number> {
+function getDummyData(length?: number): Array<ContributionData> {
   length = length || 360;
 
-  const data: Array<number> = [];
+  const data: Array<ContributionData> = [];
+  const today = new Date();
+  today.setDate(today.getDate() - length);
 
   for (let i = 0; i < length; i++) {
-    data.push(Math.random());
+    const date = new Date(today);
+    date.setDate(date.getDate() + i);
+    data.push({
+      opacity: Math.random(),
+      count: Math.floor(Math.random() * 10),
+      date: date.toISOString().split("T")[0],
+    });
   }
 
   return data;
 }
 
-function getData(mobile?: boolean, data?: Array<number>): Array<number> {
+function getData(mobile?: boolean, data?: Array<ContributionData>): Array<ContributionData> {
   if (data) {
     if (!mobile) {
       if (data.length != 0) {
@@ -58,7 +73,7 @@ function getData(mobile?: boolean, data?: Array<number>): Array<number> {
   }
 }
 
-export async function fetchContributions(mobile?: boolean): Promise<Array<number>> {
+export async function fetchContributions(mobile?: boolean): Promise<Array<ContributionData>> {
   const response: any = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -94,19 +109,23 @@ export async function fetchContributions(mobile?: boolean): Promise<Array<number
       },
     },
   } = json;
-  const data: Array<number> = [];
+  const data: Array<ContributionData> = [];
   let max = 0;
 
   Object.keys(weeks).forEach((i) => {
     const week = weeks[i].contributionDays;
 
     Object.keys(week).forEach((j) => {
-      const day = week[j].contributionCount;
+      const day = week[j];
 
-      data.push(day);
+      data.push({
+        count: day.contributionCount,
+        date: day.date,
+        opacity: 0,
+      });
 
-      if (max < day) {
-        max = day;
+      if (max < day.contributionCount) {
+        max = day.contributionCount;
       }
     });
   });
@@ -115,7 +134,7 @@ export async function fetchContributions(mobile?: boolean): Promise<Array<number
   max *= INTENSITY;
 
   data.forEach((value, index) => {
-    data[index] = clamp(value / max, 0, 1);
+    data[index].opacity = clamp(value.count / max, 0, 1);
   });
 
   return getData(mobile, data);
@@ -128,15 +147,22 @@ export function getContributions(mobile?: boolean): Array<number> {
 
   if (element) {
     for (const child of element.children as HTMLCollectionOf<HTMLElement>) {
-      const opacity = Number(child.style.opacity);
+      const innerDiv = child.querySelector('div[style*="opacity"]') as HTMLElement;
+      if (innerDiv) {
+        const opacity = Number(innerDiv.style.opacity);
+        data.push(opacity);
 
-      data.push(opacity);
-
-      if (max < opacity) {
-        max = opacity;
+        if (max < opacity) {
+          max = opacity;
+        }
       }
     }
   }
 
-  return getData(mobile, data);
+  if (data.length === 0) {
+    const dummy = getDummyData(mobile ? MOBILE_LENGTH : undefined);
+    return dummy.map((d) => d.opacity);
+  }
+
+  return data;
 }

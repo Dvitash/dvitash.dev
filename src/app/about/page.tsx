@@ -1,8 +1,7 @@
-import { SiGit, SiRobloxstudio, SiBlender, SiAdobe, SiLua, SiCplusplus, SiRust, SiTypescript, SiSwift, SiPython, SiVsco } from "react-icons/si";
+import { SiGit, SiRobloxstudio, SiBlender, SiCplusplus, SiPython } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
-import LuauIcon from "@/components/luau-icon";
+import { NamedIcon } from "@/components/icon";
 import Container from "@/components/container";
-import JavaIcon from "@/components/java-icon";
 import { calculateAge } from "@/lib/utils";
 
 interface Skill {
@@ -43,7 +42,7 @@ const languageSkills: Array<Skill> = [
   {
     name: "Lua(u)",
     level: 100,
-    icon: <LuauIcon />,
+    icon: <NamedIcon name="luau" />,
   },
   {
     name: "Python",
@@ -53,7 +52,7 @@ const languageSkills: Array<Skill> = [
   {
     name: "Java",
     level: 80,
-    icon: <JavaIcon />,
+    icon: <NamedIcon name="java" />,
   },
 ];
 
@@ -74,12 +73,12 @@ export default function About() {
 
           <div className="h-1/2 flex flex-row">
             <Container className="w-full h-full" borders="r">
-              <div className="h-full" style={{ width: `${skill.level}%` }}>
-                <div className="w-full h-full animate-progress bg-black dark:bg-white" />
+              <div className="h-full" style={{ width: "100%" }}>
+                <div className="h-full animate-progress bg-[var(--text-primary)]" style={{ width: `${skill.level}%` }} />
               </div>
             </Container>
 
-            <div className="w-[80px] px-4 flex items-center justify-center">{skill.level}%</div>
+            <div className="w-[75px] px-2 flex items-center justify-center">{Math.round(skill.level / 10)}/10</div>
           </div>
         </Container>
       );
@@ -96,7 +95,7 @@ export default function About() {
         <p className="px-4 py-2 text-justify">My name is Daniel Vitashkevich, I’m {calculateAge(2005, 2, 5)} years old and live in the United States. I am a Senior Computer Science Student, on track to get my Master's Degree next spring.</p>
 
         <p className="px-4 py-2 text-justify">
-          I’ve been programming since 2020 and I’m 100% self-taught. Currently I focus on <b>Roblox (Luau)</b>.
+          I’ve been programming since 2020 and i’m 100% self-taught. Currently I focus on <b>Roblox (Luau)</b>.
         </p>
       </Container>
 

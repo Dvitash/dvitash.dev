@@ -1,6 +1,6 @@
 import { SiX, SiYoutube, SiGithub, SiKofi, SiWakatime } from "react-icons/si";
 import { BiError } from "react-icons/bi";
-import DviIcon from "@/components/dvi-icon";
+import { NamedIcon } from "@/components/icon";
 
 // import { Dervex, DervexBanner } from "../icons";
 import Button from "@/components/button";
@@ -27,7 +27,7 @@ function iconButton(icon: string | React.ReactNode) {
         return <SiWakatime />;
       case "logo":
       case "banner":
-        return <DviIcon size={48} />;
+        return <NamedIcon name="dvi" size={48} />;
       default:
         return <BiError />;
     }

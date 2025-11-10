@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function Container({ children, className, borders, style }: Props) {
-  let css = "bg-white dark:bg-black border-black dark:border-white ";
+  let css = "bg-[var(--bg-primary)] border-[var(--text-primary)] ";
 
   if (className) {
     css += className;

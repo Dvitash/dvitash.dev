@@ -9,7 +9,7 @@ interface Props {
   callback?: () => undefined;
 }
 
-export const ButtonCSS = "group bg-white dark:bg-black border-black dark:border-white fill-black dark:fill-white hover:bg-black hover:dark:bg-white hover:fill-white hover:dark:fill-black hover:text-white hover:dark:text-black duration-200 flex items-center justify-center ";
+export const ButtonCSS = "group bg-[var(--bg-primary)] border-[var(--text-primary)] fill-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:fill-[var(--bg-primary)] hover:text-[var(--bg-primary)] duration-200 flex items-center justify-center ";
 
 export default function Button({ children, className, borders, link, label, callback }: Props) {
   let css = ButtonCSS;

@@ -20,7 +20,7 @@ export default function Home() {
         />
       </div>
 
-      <p className="text-[20px] sm:text-[30px] lg:text-[40px] xl:text-[50px] font-bold sm:font-normal">and I’m</p>
+      <p className="text-[20px] sm:text-[30px] lg:text-[40px] xl:text-[50px] font-bold sm:font-normal">and i’m</p>
 
       <p className="w-[90%] pb-[20px]">a Computer Scientist and Game Developer</p>
 

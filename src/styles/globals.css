@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #000000; /* Bright red background */
+  --text-primary: #ffffff; /* Bright green text */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #000000; /* Bright blue background */
+    --text-primary: #f5f5f5; /* Bright yellow text */
+  }
+}
+
+html,
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useCollapse } from "react-collapsed";
 
 import { clamp, countKeys } from "@/lib/utils";
 import { fetchContributions, ContributionData } from "@/lib/github";
 
 import HeaderButton, { HeaderButtonType } from "@/components/headerbutton";
+import { IoCaretBack } from "react-icons/io5";
 import Container from "@/components/container";
 import Button from "@/components/button";
 import ContributionSquare from "@/components/contribution-square";
@@ -14,7 +16,7 @@ import ContributionSquare from "@/components/contribution-square";
 const HEADER_BUTTONS: Array<HeaderButtonType> = [
   {
     link: "/",
-    icon: "logo",
+    icon: "home",
   },
   {
     link: "about",
@@ -36,9 +38,11 @@ const HEADER_BUTTONS: Array<HeaderButtonType> = [
 const TEXT_BUTTONS = countKeys(HEADER_BUTTONS, "text");
 
 export default function Header() {
+  const pathname = usePathname();
   const [buttonCount, setButtonCount] = useState(HEADER_BUTTONS.length);
   const [isExpanded, setIsExpanded] = useState(false);
   const [mobileContributions, setMobileContributions] = useState<ContributionData[]>([]);
+  const [showBackButton, setShowBackButton] = useState(false);
   const { getCollapseProps } = useCollapse({ isExpanded });
 
   function header() {
@@ -66,20 +70,26 @@ export default function Header() {
       setIsExpanded(false);
     }
 
-    if (buttonCount == 2) {
-      buttons[0].icon = "banner";
+    // Remove the first button when on home page
+    if (pathname === "/") {
+      buttons = buttons.slice(1);
     } else {
-      buttons[0].icon = "logo";
+      if (showBackButton) {
+        buttons[0].icon = <IoCaretBack size={48} />;
+      }
     }
 
     return (
       <Container className="relative w-full h-[80px] z-20 flex flex-row">
         {buttons.map((button, index) => {
+          const isFirstButton = index === 0;
+          const wasOriginallyFirstButton = pathname !== "/" && isFirstButton;
           return (
             <HeaderButton
               key={index}
               button={button}
-              borders={index == 0 ? "" : "l"}
+              borders={isFirstButton ? "" : "l"}
+              animateIn={wasOriginallyFirstButton && showBackButton}
               callback={() => {
                 setIsExpanded(false);
               }}
@@ -183,6 +193,18 @@ export default function Header() {
     }
     loadContributions();
   }, []);
+
+  useEffect(() => {
+    if (pathname === "/") {
+      setShowBackButton(false);
+    } else {
+      // Add a small delay to create smooth animation when navigating to a new page
+      const timer = setTimeout(() => {
+        setShowBackButton(true);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
   if (typeof window !== "undefined") {
     console.clear();

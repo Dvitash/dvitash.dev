@@ -19,7 +19,7 @@ const ICONS = {
   java: { src: "/java_logo.svg", alt: "Java" },
   luau: { src: "/luau_logo.png", alt: "Luau" },
   "nexus-blast": { src: "/nexus_blast_logo.png", alt: "Nexus Blast" },
-  dvi: { src: "/dvi_logo_light.svg", alt: "Dvi" },
+  archipelago: { src: "/archipelago.svg", alt: "Archipelago" },
 } as const;
 
 type IconName = keyof typeof ICONS;

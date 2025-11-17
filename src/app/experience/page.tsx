@@ -1,12 +1,11 @@
-import { BiError } from "react-icons/bi";
-import { SiTradingview, SiPinescript, SiRust, SiGo, SiLua, SiTypescript, SiJavascript, SiCplusplus, SiSwift, SiKotlin, SiTailwindcss, SiNodedotjs, SiDocker, SiReact, SiPreact, SiNextdotjs, SiVite, SiVapor, SiGooglechrome, SiSpotify, SiGit, SiVercel, SiRedis, SiDocusaurus, SiRider, SiXcode, SiRobloxstudio, SiPython } from "react-icons/si";
+import { SiLatex, SiDatadog, SiNumpy, SiPandas, SiNasa, SiTradingview, SiPinescript, SiRust, SiGo, SiLua, SiTypescript, SiJavascript, SiCplusplus, SiSwift, SiKotlin, SiTailwindcss, SiNodedotjs, SiDocker, SiReact, SiPreact, SiNextdotjs, SiVite, SiVapor, SiGooglechrome, SiSpotify, SiGit, SiVercel, SiRedis, SiDocusaurus, SiRider, SiXcode, SiRobloxstudio, SiPython } from "react-icons/si";
+import { MdAutoFixHigh, MdSchool } from "react-icons/md";
 import { NamedIcon } from "@/components/icon";
-import { MdAutoFixHigh } from "react-icons/md";
+import { BiError } from "react-icons/bi";
+import { FaAws } from "react-icons/fa";
 
 import LinkButton from "@/components/linkButton";
 import Container from "@/components/container";
-import { VscVscode } from "react-icons/vsc";
-import Link from "@/components/link";
 import Tooltip from "@/components/tooltip";
 
 interface Experience {
@@ -50,24 +49,10 @@ const experience: Array<Experience> = [
     links: [],
   },
   {
-    name: "Synapse Dynamics LLC — Founder & CEO",
-    technologies: ["tradingview", "pinescript", "python"],
-    time: "2022 - Present",
-    icon: <SiTradingview size={56} />,
-    desc: (
-      <>
-        Algorithmic Trading company primarily focused on trading the S&P 500.{"\n"}
-        Leading development of proprietary trading algorithms and managing client portfolios.{"\n"}
-        Driving innovation in automated trading systems and market analysis.
-      </>
-    ),
-    links: [],
-  },
-  {
-    name: "Archipelago Analytics - Engineering Intern",
-    technologies: ["python", "node", "docker"],
+    name: "Archipelago Analytics Engineering Intern",
+    technologies: ["python", "docker", "pandas", "numpy", "aws", "datadog", "git"],
     time: "Summer 2025",
-    icon: <SiPython size={56} />,
+    icon: <NamedIcon name="archipelago" size={56} />,
     desc: (
       <>
         Assisted in the creation and optimization of multiple data processing pipelines for{"\n"}
@@ -75,13 +60,13 @@ const experience: Array<Experience> = [
         accuracy and reliability. Deployed 3 live code deployments to production environments.
       </>
     ),
-    links: [],
+    links: ["https://www.onarchipelago.com/"],
   },
   {
     name: "NASA Research Grant",
-    technologies: ["python", "rust"],
+    technologies: ["python", "latex"],
     time: "Summer 2024 - Present",
-    icon: <SiPython size={56} />,
+    icon: <SiNasa size={56} />,
     desc: (
       <>
         Conducting research on optimizing 5G channel estimation and beamforming algorithms.{"\n"}
@@ -89,47 +74,19 @@ const experience: Array<Experience> = [
         Contributing to cutting-edge research in telecommunications and network optimization.
       </>
     ),
-    links: [],
-  },
-  {
-    name: "Alphabet Academy - IT Systems Administrator",
-    technologies: [],
-    time: "January 2021 - Present",
-    icon: <VscVscode size={56} />,
-    desc: (
-      <>
-        Provided comprehensive IT support and administration including setup,{"\n"}
-        troubleshooting, and maintenance of PCs, IP cameras, MS servers, and storage systems.{"\n"}
-        Managed network infrastructure and ensured system reliability for educational environment.
-      </>
-    ),
-    links: [],
+    links: ["https://www.researchgate.net/publication/394617605_AI-Enhanced_Deep_Neural_Network_Architecture_for_Accurate_Channel_Estimation_in_6G_Networks"],
   },
 ];
 
+const MAX_FONT_SIZE = 24; // Maximum font size constant for name fields
+
 export default function Experience() {
-  function getAutoScaledFontSize(name: string) {
-    const length = name.length;
-    const containerWidth = 600; // Fixed container width in pixels
-    const avgCharWidthRatio = 0.6; // Average character width as ratio of font size
-
-    // Calculate ideal font size to fit container: container_width / (text_length * avg_char_width_ratio)
-    // This gives us the maximum font size that would fit the text on one line
-    const idealFontSize = containerWidth / (length * avgCharWidthRatio);
-
-    // Apply diminishing returns for very short text (don't make it ridiculously large)
-    const adjustedIdealSize = Math.min(idealFontSize, length < 20 ? idealFontSize * 0.8 : idealFontSize);
-
-    // Clamp between reasonable bounds for readability
-    const minSize = 14; // Minimum readable size
-    const maxSize = 48; // Maximum reasonable size
-    const clampedSize = Math.max(minSize, Math.min(maxSize, adjustedIdealSize));
-
+  function getConsistentFontSize() {
     // For mobile, scale down slightly but maintain proportions
-    const mobileSize = Math.max(minSize, clampedSize * 0.75);
+    const mobileSize = Math.max(14, MAX_FONT_SIZE * 0.75);
 
     return {
-      fontSize: `clamp(${mobileSize}px, ${clampedSize / 16}rem, ${clampedSize}px)`,
+      fontSize: `clamp(${mobileSize}px, ${MAX_FONT_SIZE / 16}rem, ${MAX_FONT_SIZE}px)`,
     };
   }
 
@@ -145,56 +102,12 @@ export default function Experience() {
 
     return technologies.map((technology, index) => {
       switch (technology) {
-        case "rust":
-          return div(index, <SiRust />, "Rust");
-        case "go":
-          return div(index, <SiGo />, "Go");
         case "lua":
           return div(index, <SiLua />, "Lua");
-        case "ts":
-          return div(index, <SiTypescript />, "TypeScript");
-        case "js":
-          return div(index, <SiJavascript />, "JavaScript");
-        case "cpp":
-          return div(index, <SiCplusplus />, "C++");
-        case "swift":
-          return div(index, <SiSwift />, "Swift");
-        case "kotlin":
-          return div(index, <SiKotlin />, "Kotlin");
-        case "redis":
-          return div(index, <SiRedis />, "Redis");
         case "docker":
           return div(index, <SiDocker />, "Docker");
-        case "tailwind":
-          return div(index, <SiTailwindcss />, "Tailwind CSS");
-        case "node":
-          return div(index, <SiNodedotjs />, "Node.js");
-        case "react":
-          return div(index, <SiReact />, "React");
-        case "preact":
-          return div(index, <SiPreact />, "Preact");
-        case "next":
-          return div(index, <SiNextdotjs />, "Next.js");
-        case "vite":
-          return div(index, <SiVite />, "Vite");
-        case "doc":
-          return div(index, <SiDocusaurus />, "Docusaurus");
-        case "vercel":
-          return div(index, <SiVercel />, "Vercel");
-        case "vapor":
-          return div(index, <SiVapor />, "Vapor");
-        case "chrome":
-          return div(index, <SiGooglechrome />, "Chrome");
-        case "spotify":
-          return div(index, <SiSpotify />, "Spotify");
         case "git":
           return div(index, <SiGit />, "Git");
-        case "vsc":
-          return div(index, <VscVscode />, "VS Code");
-        case "rider":
-          return div(index, <SiRider />, "Rider");
-        case "xcode":
-          return div(index, <SiXcode />, "Xcode");
         case "roblox":
           return div(index, <SiRobloxstudio />, "Roblox Studio");
         case "tradingview":
@@ -203,6 +116,16 @@ export default function Experience() {
           return div(index, <SiPinescript />, "PineScript");
         case "python":
           return div(index, <SiPython />, "Python");
+        case "pandas":
+          return div(index, <SiPandas />, "Pandas");
+        case "numpy":
+          return div(index, <SiNumpy />, "NumPy");
+        case "aws":
+          return div(index, <FaAws />, "AWS");
+        case "datadog":
+          return div(index, <SiDatadog />, "Datadog");
+        case "latex":
+          return div(index, <SiLatex />, "LaTeX");
         default:
           return div(index, <BiError />, technology);
       }
@@ -227,8 +150,8 @@ export default function Experience() {
                   {project.icon}
                 </Container>
 
-                <div className="relative w-full h-full flex items-center justify-center p-4">
-                  <b className="text-balance" style={getAutoScaledFontSize(project.name)}>
+                <div className="relative w-full h-full flex items-center justify-start p-4">
+                  <b className="text-balance" style={getConsistentFontSize()}>
                     {project.name}
                   </b>
                 </div>

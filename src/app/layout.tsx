@@ -18,8 +18,6 @@ export default function Root({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="./dvi_logo_light.svg" media="(prefers-color-scheme: dark)" />
-        <link rel="icon" href="./dvi_logo_dark.svg" media="(prefers-color-scheme: light)" />
       </head>
 
       <body className={ROBOTO_MONO.className}>

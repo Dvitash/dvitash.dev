@@ -1,3 +1,4 @@
+import React from "react";
 import { SiX, SiYoutube, SiGithub, SiKofi, SiWakatime } from "react-icons/si";
 import { BiError } from "react-icons/bi";
 import { NamedIcon } from "@/components/icon";
@@ -25,9 +26,6 @@ function iconButton(icon: string | React.ReactNode) {
         return <SiGithub />;
       case "wakatime":
         return <SiWakatime />;
-      case "logo":
-      case "banner":
-        return <NamedIcon name="dvi" size={48} />;
       default:
         return <BiError />;
     }
@@ -40,9 +38,17 @@ function textButton(text: string) {
   return <b>{text}</b>;
 }
 
-export default function HeaderButton({ className, button, callback, borders, compact }: { className?: string; button: HeaderButtonType; callback?: () => undefined; borders: string; compact?: boolean }) {
+export default function HeaderButton({ className, button, callback, borders, compact, animateIn }: { className?: string; button: HeaderButtonType; callback?: () => undefined; borders: string; compact?: boolean; animateIn?: boolean }) {
   if (!className) {
-    className = button.icon ? (typeof button.icon === "string" && button.icon != "banner" ? `${compact ? "min-w-[74px]" : "min-w-[76px]"} min-h-[76px] text-3xl` : "w-full") : "w-full text-xl lg:text-2xl";
+    // Check if icon is the IoCaretBack component (React element)
+    const isCaretBackIcon = button.icon && typeof button.icon !== "string" && React.isValidElement(button.icon) && (button.icon.type as any)?.name === "IoCaretBack";
+
+    if (isCaretBackIcon) {
+      // Force square aspect ratio for the back button
+      className = "aspect-square w-[76px] text-3xl flex items-center justify-center";
+    } else {
+      className = button.icon ? (typeof button.icon === "string" && button.icon != "banner" ? `${compact ? "min-w-[74px]" : "min-w-[76px]"} min-h-[76px] text-3xl` : "w-full") : "w-full text-xl lg:text-2xl";
+    }
   }
 
   const getLabel = () => {
@@ -53,8 +59,9 @@ export default function HeaderButton({ className, button, callback, borders, com
   };
 
   if (button.link) {
+    const buttonClassName = animateIn ? `${className} transition-all duration-300 ease-out` : className;
     return (
-      <Button className={className} link={button.link} label={getLabel()} borders={borders} callback={callback}>
+      <Button className={buttonClassName} link={button.link} label={getLabel()} borders={borders} callback={callback}>
         {button.icon ? iconButton(button.icon) : textButton(button.text!)}
       </Button>
     );

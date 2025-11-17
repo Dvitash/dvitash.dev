@@ -21,8 +21,8 @@ const HEADER_BUTTONS: Array<HeaderButtonType> = [
     text: "ABOUT",
   },
   {
-    link: "projects",
-    text: "PROJECTS",
+    link: "experience",
+    text: "EXPERIENCE",
   },
   {
     link: "contact",

@@ -19,6 +19,19 @@ interface Experience {
 
 const experience: Array<Experience> = [
   {
+    name: "Verde",
+    technologies: ["roblox", "luau", "git"],
+    time: "2025 - Present",
+    icon: <SiRobloxstudio size={56} />,
+    desc: (
+      <>
+        An open-source Roblox Studio explorer and properties emulator extension for VS Code.{"\n"}
+        Gives Roblox developers more freedom when developing off-platform.
+      </>
+    ),
+    links: ["https://github.com/Dvitash/Verde", "https://marketplace.visualstudio.com/items?itemName=Dvitash.verde", "https://create.roblox.com/store/asset/84296161836385", "https://open-vsx.org/extension/Dvitash/verde"],
+  },
+  {
     name: "Trading Algorithm",
     technologies: ["tradingview", "pinescript"],
     time: "November 2023 - now",

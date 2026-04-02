@@ -1,219 +1,100 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCollapse } from "react-collapsed";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { IoMenu, IoClose } from "react-icons/io5";
 
-import { clamp, countKeys } from "@/lib/utils";
-import { fetchContributions, ContributionData } from "@/lib/github";
-
-import HeaderButton, { HeaderButtonType } from "@/components/headerbutton";
-import { IoCaretBack } from "react-icons/io5";
-import Container from "@/components/container";
-import Button from "@/components/button";
-import ContributionSquare from "@/components/contribution-square";
-
-const HEADER_BUTTONS: Array<HeaderButtonType> = [
-  {
-    link: "/",
-    icon: "home",
-  },
-  {
-    link: "about",
-    text: "ABOUT",
-  },
-  {
-    link: "experience",
-    text: "EXPERIENCE",
-  },
-  {
-    link: "contact",
-    text: "CONTACT",
-  },
-  {
-    link: "https://github.com/Dvitash",
-    icon: "github",
-  },
+const navItems = [
+  { href: "/about", label: "About" },
+  { href: "/experience", label: "Work" },
+  { href: "/contact", label: "Contact" },
 ];
-const TEXT_BUTTONS = countKeys(HEADER_BUTTONS, "text");
 
 export default function Header() {
   const pathname = usePathname();
-  const [buttonCount, setButtonCount] = useState(HEADER_BUTTONS.length);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [mobileContributions, setMobileContributions] = useState<ContributionData[]>([]);
-  const [showBackButton, setShowBackButton] = useState(false);
-  const { getCollapseProps } = useCollapse({ isExpanded });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  function header() {
-    let buttons = HEADER_BUTTONS;
-
-    if (buttonCount != HEADER_BUTTONS.length) {
-      buttons = HEADER_BUTTONS.slice(0, buttonCount - 1);
-
-      buttons.push({
-        button: (
-          <Button
-            className="min-w-[76px] border-l-2 flex-col"
-            borders="l"
-            callback={() => {
-              setIsExpanded(!isExpanded);
-            }}
-          >
-            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "rotate-45 translate-y-1" : "-translate-y-0.5"}`} />
-            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-100 transition-opacity ease-out w-[25px] h-[2px] my-0.5 ${isExpanded ? "opacity-0" : "opacity-100"}`} />
-            <span className={`bg-[var(--text-primary)] group-hover:bg-[var(--bg-primary)] block duration-200 transition-transform ease-out w-[25px] h-[2px] ${isExpanded ? "-rotate-45 -translate-y-1" : "translate-y-0.5"}`} />
-          </Button>
-        ),
-      });
-    } else if (isExpanded) {
-      setIsExpanded(false);
-    }
-
-    // Remove the first button when on home page
-    if (pathname === "/") {
-      buttons = buttons.slice(1);
-    } else {
-      if (showBackButton) {
-        buttons[0].icon = <IoCaretBack size={48} />;
-      }
-    }
-
-    return (
-      <Container className="relative w-full h-[80px] z-20 flex flex-row">
-        {buttons.map((button, index) => {
-          const isFirstButton = index === 0;
-          const wasOriginallyFirstButton = pathname !== "/" && isFirstButton;
-          return (
-            <HeaderButton
-              key={index}
-              button={button}
-              borders={isFirstButton ? "" : "l"}
-              animateIn={wasOriginallyFirstButton && showBackButton}
-              callback={() => {
-                setIsExpanded(false);
-              }}
-            />
-          );
-        })}
-      </Container>
-    );
-  }
-
-  function menu() {
-    let buttons: Array<HeaderButtonType> = [];
-    let iconButtons: Array<HeaderButtonType> = [];
-    let textButtons: Array<HeaderButtonType> = [];
-
-    if (buttonCount != HEADER_BUTTONS.length) {
-      buttons = HEADER_BUTTONS.slice(buttonCount - 1, HEADER_BUTTONS.length);
-
-      if (buttons.length == HEADER_BUTTONS.length - 1) {
-        textButtons = buttons.slice(0, TEXT_BUTTONS);
-        iconButtons = buttons.slice(TEXT_BUTTONS, buttons.length);
-      }
-    }
-
-    if (buttons.length == 0) {
-      return;
-    } else if (textButtons.length == 0) {
-      return (
-        <Container className="absolute right-0 z-10 w-[78px] duration-300" borders="lrb" style={{ marginTop: isExpanded ? 0 : -2 }}>
-          <div {...getCollapseProps()}>
-            {buttons.map((button, index) => {
-              return <HeaderButton key={index} button={button} borders={index == 0 ? "" : "t"} compact={true} />;
-            })}
-          </div>
-        </Container>
-      );
-    } else {
-      return (
-        <Container className="absolute z-10 w-full duration-300" borders="lrb" style={{ marginTop: isExpanded ? 0 : -2 }}>
-          <div {...getCollapseProps()}>
-            <div className="flex flex-row">
-              <div className="w-[calc(100%-76px)] flex flex-col">
-                {textButtons.map((button, index) => {
-                  return (
-                    <HeaderButton
-                      key={index}
-                      className="h-[76px] text-2xl"
-                      button={button}
-                      borders={"b"}
-                      callback={() => {
-                        setIsExpanded(false);
-                      }}
-                    />
-                  );
-                })}
-
-                <div className="mobileGithubContributions w-[calc(100%+76px)] h-[76px] grid grid-rows-5 grid-flow-col content-start overflow-hidden bg-[var(--bg-primary)]">
-                  {mobileContributions.map((contribution, index) => {
-                    return <ContributionSquare key={index} contribution={contribution} />;
-                  })}
-                </div>
-              </div>
-
-              <div className="w-[76px]">
-                {iconButtons.map((button, index) => {
-                  return <HeaderButton key={index} button={button} borders={"lb"} />;
-                })}
-              </div>
-            </div>
-          </div>
-        </Container>
-      );
-    }
-  }
-
-  useEffect(() => {
-    function updateHeaderSize() {
-      if (window.innerWidth > 768) {
-        if (window.innerWidth >= 1280) {
-          setButtonCount(HEADER_BUTTONS.length);
-        } else {
-          setButtonCount(clamp(Math.floor(window.innerWidth / 100) - 1, TEXT_BUTTONS + 2, HEADER_BUTTONS.length));
-        }
-      } else {
-        setButtonCount(2);
-      }
-    }
-
-    updateHeaderSize();
-    window.addEventListener("resize", () => updateHeaderSize());
-
-    return () => {
-      window.removeEventListener("resize", () => updateHeaderSize());
-    };
-  }, []);
-
-  useEffect(() => {
-    async function loadContributions() {
-      const contributions = await fetchContributions(true);
-      setMobileContributions(contributions);
-    }
-    loadContributions();
-  }, []);
-
-  useEffect(() => {
-    if (pathname === "/") {
-      setShowBackButton(false);
-    } else {
-      // Add a small delay to create smooth animation when navigating to a new page
-      const timer = setTimeout(() => {
-        setShowBackButton(true);
-      }, 150);
-      return () => clearTimeout(timer);
-    }
-  }, [pathname]);
-
-  if (typeof window !== "undefined") {
-    console.clear();
-  }
+  const isActive = (href: string) => pathname === href;
 
   return (
-    <header>
-      {header()}
-      {menu()}
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-sm">
+      <nav className="content-container h-14 flex items-center justify-between">
+        {/* logo */}
+        <Link
+          href="/"
+          className="font-display text-lg tracking-tight hover:text-[var(--accent)] transition-colors"
+        >
+          dvitash.dev
+        </Link>
+
+        {/* desktop nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`font-label transition-colors ${
+                isActive(item.href)
+                  ? "text-[var(--accent)]"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href="https://github.com/Dvitash"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+            aria-label="GitHub"
+          >
+            <FaGithub size={20} />
+          </a>
+        </div>
+
+        {/* mobile menu button */}
+        <button
+          className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+        </button>
+      </nav>
+
+      {/* mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-[var(--border)] bg-[var(--bg-primary)]">
+          <div className="content-container py-4 flex flex-col gap-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-label py-2 transition-colors ${
+                  isActive(item.href)
+                    ? "text-[var(--accent)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <a
+              href="https://github.com/Dvitash"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-2"
+            >
+              <FaGithub size={18} />
+              <span className="font-label">GitHub</span>
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

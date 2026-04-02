@@ -28,12 +28,10 @@ export default function ContributionSquare({ contribution }: Props) {
       let top = squareRect.top - tooltipRect.height - 8;
       let above = true;
 
-      // clamp horizontal position to viewport bounds
       const minLeft = 8;
       const maxLeft = viewportWidth - tooltipRect.width - 8;
       left = Math.max(minLeft, Math.min(maxLeft, left));
 
-      // clamp vertical position to viewport bounds - prefer above, but show below if needed
       const minTop = 8;
       if (top < minTop) {
         top = squareRect.bottom + 8;
@@ -76,16 +74,27 @@ export default function ContributionSquare({ contribution }: Props) {
   const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 
   return (
-    <div ref={squareRef} className="group relative aspect-square p-[0.1rem]" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <div className="w-full h-full bg-[#39d353]" style={{ opacity: contribution.opacity }} />
-      <div ref={tooltipRef} className="fixed pointer-events-none z-50 px-4 py-2 text-center text-xs duration-200 delay-0 opacity-0 group-hover:delay-500 group-hover:opacity-100 bg-[var(--bg-primary)] border-2 border-[var(--text-primary)] text-[var(--text-primary)] whitespace-nowrap" style={tooltipStyle}>
-        <div className="font-bold">
+    <div
+      ref={squareRef}
+      className="group relative aspect-square p-[0.1rem]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className="w-full h-full bg-[var(--accent)]"
+        style={{ opacity: contribution.opacity }}
+      />
+      <div
+        ref={tooltipRef}
+        className="fixed pointer-events-none z-50 px-3 py-2 text-xs opacity-0 group-hover:delay-300 group-hover:opacity-100 bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-primary)] whitespace-nowrap transition-opacity duration-200"
+        style={tooltipStyle}
+      >
+        <div className="font-bold text-[var(--accent)]">
           {contribution.count} {contribution.count === 1 ? "contribution" : "contributions"}
         </div>
-        <div>
+        <div className="text-[var(--text-secondary)]">
           {dayName}, {formattedDate}
         </div>
-        <svg className={`absolute left-1/2 -translate-x-1/2 h-3 w-full text-[var(--text-primary)] ${isAbove ? "top-full" : "bottom-full rotate-180"}`} xmlSpace="preserve" x="0px" y="0px" viewBox="0 0 255 255"></svg>
       </div>
     </div>
   );

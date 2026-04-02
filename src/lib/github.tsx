@@ -104,7 +104,7 @@ export async function fetchContributions(mobile?: boolean): Promise<Array<Contri
     data: {
       user: {
         contributionsCollection: {
-          contributionCalendar: { _, weeks },
+          contributionCalendar: { weeks },
         },
       },
     },
@@ -138,31 +138,4 @@ export async function fetchContributions(mobile?: boolean): Promise<Array<Contri
   });
 
   return getData(mobile, data);
-}
-
-export function getContributions(mobile?: boolean): Array<number> {
-  const element = document.getElementById("githubContributions");
-  const data: Array<number> = [];
-  let max = 0;
-
-  if (element) {
-    for (const child of element.children as HTMLCollectionOf<HTMLElement>) {
-      const innerDiv = child.querySelector('div[style*="opacity"]') as HTMLElement;
-      if (innerDiv) {
-        const opacity = Number(innerDiv.style.opacity);
-        data.push(opacity);
-
-        if (max < opacity) {
-          max = opacity;
-        }
-      }
-    }
-  }
-
-  if (data.length === 0) {
-    const dummy = getDummyData(mobile ? MOBILE_LENGTH : undefined);
-    return dummy.map((d) => d.opacity);
-  }
-
-  return data;
 }

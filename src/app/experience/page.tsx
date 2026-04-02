@@ -1,219 +1,180 @@
-import { SiLatex, SiDatadog, SiNumpy, SiPandas, SiNasa, SiTradingview, SiPinescript, SiRust, SiGo, SiLua, SiTypescript, SiJavascript, SiCplusplus, SiSwift, SiKotlin, SiTailwindcss, SiNodedotjs, SiDocker, SiReact, SiPreact, SiNextdotjs, SiVite, SiVapor, SiGooglechrome, SiSpotify, SiGit, SiVercel, SiRedis, SiDocusaurus, SiRider, SiXcode, SiRobloxstudio, SiPython } from "react-icons/si";
+import Link from "next/link";
+import { SiLatex, SiDatadog, SiNumpy, SiPandas, SiNasa, SiTradingview, SiPinescript, SiGit, SiRobloxstudio, SiPython } from "react-icons/si";
 import { MdAutoFixHigh, MdSchool } from "react-icons/md";
-import { NamedIcon } from "@/components/icon";
-import { BiError } from "react-icons/bi";
 import { FaAws } from "react-icons/fa";
+import { BiError } from "react-icons/bi";
+import { IoArrowForward } from "react-icons/io5";
+import { NamedIcon } from "@/components/icon";
 
-import LinkButton from "@/components/linkButton";
-import Container from "@/components/container";
-import Tooltip from "@/components/tooltip";
-
-interface Experience {
+interface Project {
   name: string;
-  technologies?: Array<string>;
+  technologies: Array<{ icon: React.ReactNode; name: string }>;
   time: string;
-  icon: React.ReactNode;
-  desc: React.ReactNode;
-  links?: Array<string>;
+  description: string;
+  links?: Array<{ url: string; label: string }>;
+  featured?: boolean;
 }
 
-const experience: Array<Experience> = [
+const projects: Project[] = [
   {
     name: "Verde",
-    technologies: ["roblox", "luau", "git"],
+    technologies: [
+      { icon: <SiRobloxstudio />, name: "Roblox Studio" },
+      { icon: <NamedIcon name="luau" />, name: "Luau" },
+      { icon: <SiGit />, name: "Git" },
+    ],
     time: "2025 - Present",
-    icon: <SiRobloxstudio size={56} />,
-    desc: (
-      <>
-        An open-source Roblox Studio explorer and properties emulator extension for VS Code.{"\n"}
-        Gives Roblox developers more freedom when developing off-platform.
-      </>
-    ),
-    links: ["https://github.com/Dvitash/Verde", "https://marketplace.visualstudio.com/items?itemName=Dvitash.verde", "https://create.roblox.com/store/asset/84296161836385", "https://open-vsx.org/extension/Dvitash/verde"],
+    description: "Open-source Roblox Studio explorer and properties emulator extension for VS Code. Enables off-platform development with full project synchronization.",
+    links: [
+      { url: "https://github.com/Dvitash/Verde", label: "GitHub" },
+      { url: "https://marketplace.visualstudio.com/items?itemName=Dvitash.verde", label: "VS Marketplace" },
+    ],
+    featured: true,
   },
   {
-    name: "Trading Algorithm",
-    technologies: ["tradingview", "pinescript"],
-    time: "November 2023 - now",
-    icon: <NamedIcon name="nexus-blast" size={56} />,
-    desc: (
-      <>
-        The trading algorithm driving my company, Synapse Dynamics.{"\n"}
-        Hosted and ran on the TradingView cloud.{"\n"}
-        Provides real-time trade entry & exit alerts for myself and my clients.
-      </>
-    ),
-    links: ["https://docs.google.com/spreadsheets/d/1ZkMmbKwuAI89oNNKozUIAiriOyR1O3F1xWMw0-agyEo/edit?usp=sharing"],
-  },
-  {
-    name: "Futures Autotrader",
-    technologies: ["tradingview", "pinescript", "python"],
-    time: "May 2023 - August 2023",
-    icon: <MdAutoFixHigh size={56} />,
-    desc: (
-      <>
-        Software that turned text-based alerts from the Nexus Blast trading algorithm {"\n"}
-        into real orders on the user's futures broker of choice. {"\n"}
-        Utilized TradingView API calls with their broker integration feature {"\n"}
-        to execute orders on the users' behalf. Supported complex order management systems {"\n"}
-        such as automatic stop loss and take profit levels, as well as automatic break-even adjustment when {"\n"}a take profit level is hit.
-      </>
-    ),
-    links: [],
-  },
-  {
-    name: "Archipelago Analytics Engineering Intern",
-    technologies: ["python", "docker", "pandas", "numpy", "aws", "datadog", "git"],
-    time: "Summer 2025",
-    icon: <NamedIcon name="archipelago" size={56} />,
-    desc: (
-      <>
-        Assisted in the creation and optimization of multiple data processing pipelines for{"\n"}
-        property insurance documents. Contributed to significant improvements in data extraction{"\n"}
-        accuracy and reliability. Deployed 3 live code deployments to production environments.
-      </>
-    ),
-    links: ["https://www.onarchipelago.com/"],
+    name: "Synapse Dynamics Trading Algorithm",
+    technologies: [
+      { icon: <SiTradingview />, name: "TradingView" },
+      { icon: <SiPinescript />, name: "PineScript" },
+    ],
+    time: "November 2023 - Present",
+    description: "Algorithmic trading system providing real-time entry and exit alerts for futures markets. Hosted on TradingView cloud with live client distribution.",
+    links: [{ url: "https://docs.google.com/spreadsheets/d/1ZkMmbKwuAI89oNNKozUIAiriOyR1O3F1xWMw0-agyEo/edit?usp=sharing", label: "Performance" }],
+    featured: true,
   },
   {
     name: "NASA Research Grant",
-    technologies: ["python", "latex"],
-    time: "Summer 2024 - Present",
-    icon: <SiNasa size={56} />,
-    desc: (
-      <>
-        Conducting research on optimizing 5G channel estimation and beamforming algorithms.{"\n"}
-        Developing advanced signal processing techniques for next-generation wireless communication.{"\n"}
-        Contributing to cutting-edge research in telecommunications and network optimization.
-      </>
-    ),
-    links: ["https://www.researchgate.net/publication/394617605_AI-Enhanced_Deep_Neural_Network_Architecture_for_Accurate_Channel_Estimation_in_6G_Networks"],
+    technologies: [
+      { icon: <SiPython />, name: "Python" },
+      { icon: <SiLatex />, name: "LaTeX" },
+    ],
+    time: "Summer 2024 - Fall 2025",
+    description: "Research on optimizing 5G channel estimation and beamforming algorithms. Developing deep neural network architectures for 6G wireless communication.",
+    links: [{ url: "https://www.researchgate.net/publication/394617605_AI-Enhanced_Deep_Neural_Network_Architecture_for_Accurate_Channel_Estimation_in_6G_Networks", label: "Paper" }],
+    featured: true,
+  },
+  {
+    name: "Archipelago Analytics Intern",
+    technologies: [
+      { icon: <SiPython />, name: "Python" },
+      { icon: <SiPandas />, name: "Pandas" },
+      { icon: <SiNumpy />, name: "NumPy" },
+      { icon: <FaAws />, name: "AWS" },
+      { icon: <SiDatadog />, name: "Datadog" },
+    ],
+    time: "Summer 2025",
+    description: "Built and optimized data processing pipelines for property insurance documents. Deployed 3 production releases with improved extraction accuracy.",
+    links: [{ url: "https://www.onarchipelago.com/", label: "Company" }],
+  },
+  {
+    name: "Futures Autotrader",
+    technologies: [
+      { icon: <SiTradingview />, name: "TradingView" },
+      { icon: <SiPinescript />, name: "PineScript" },
+      { icon: <SiPython />, name: "Python" },
+    ],
+    time: "May 2023 - August 2023",
+    description: "Automated execution system converting text alerts into live futures orders. Implemented complex order management with stop loss, take profit, and break-even adjustment.",
   },
   {
     name: "Grow a Coral Reef",
-    technologies: ["roblox", "luau", "git"],
+    technologies: [
+      { icon: <SiRobloxstudio />, name: "Roblox Studio" },
+      { icon: <NamedIcon name="luau" />, name: "Luau" },
+    ],
     time: "Summer 2025",
-    icon: <SiRobloxstudio size={56} />,
-    desc: (
-      <>
-        Created a Roblox game that allows players to grow and decorate their own coral reef.{"\n"}
-        Developed custom growth algorithms and procedural animations for the coral growth process.{"\n"}
-        Full-stack development of the game, including server logic, client UI, and database integration.
-      </>
-    ),
-    links: ["https://www.roblox.com/games/74641514092935/Grow-a-Coral-Reef"],
+    description: "Roblox game with custom growth algorithms and procedural coral animations. Full-stack development including server logic, client UI, and database integration.",
+    links: [{ url: "https://www.roblox.com/games/74641514092935/Grow-a-Coral-Reef", label: "Play" }],
   },
   {
-    name: "Ro-Bio Experiment Lead Developer",
-    technologies: ["roblox", "luau"],
+    name: "Ro-Bio Experiment",
+    technologies: [
+      { icon: <SiRobloxstudio />, name: "Roblox Studio" },
+      { icon: <NamedIcon name="luau" />, name: "Luau" },
+    ],
     time: "Summer 2024",
-    icon: <SiRobloxstudio size={56} />,
-    desc: (
-      <>
-        Lead developer for theg game "Ro-Bio Experiment".{"\n"}
-        Planned updates, managed the development team, and coordinated with the game's creator.{"\n"}
-        Contributed to the development of some of the game's core mechanics and systems.
-      </>
-    ),
-    links: ["https://www.roblox.com/games/15155782598/Ro-Bio"],
+    description: "Lead developer managing team coordination and core system development. Planned updates and collaborated directly with the game creator.",
+    links: [{ url: "https://www.roblox.com/games/15155782598/Ro-Bio", label: "Play" }],
   },
 ];
 
-const MAX_FONT_SIZE = 24;
+function TechnologyBadge({ tech }: { tech: { icon: React.ReactNode; name: string } }) {
+  return (
+    <div className="flex items-center gap-1.5 px-2 py-1 text-xs border border-[var(--border)] text-[var(--text-muted)]">
+      <span className="text-sm">{tech.icon}</span>
+      <span className="font-label">{tech.name}</span>
+    </div>
+  );
+}
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <article className={`card p-6 ${project.featured ? "md:p-8" : ""}`}>
+      <div className="flex flex-col gap-4">
+        {/* header */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+          <h3 className="font-display text-xl md:text-2xl">{project.name}</h3>
+          <span className="font-label text-xs text-[var(--text-muted)] shrink-0">{project.time}</span>
+        </div>
+
+        {/* description */}
+        <p className="text-[var(--text-secondary)] leading-relaxed max-w-2xl">{project.description}</p>
+
+        {/* tech stack */}
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map((tech, index) => (
+            <TechnologyBadge key={index} tech={tech} />
+          ))}
+        </div>
+
+        {/* links */}
+        {project.links && project.links.length > 0 && (
+          <div className="flex flex-wrap gap-4 pt-2">
+            {project.links.map((link, index) => (
+              <a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="link-accent font-label text-sm flex items-center gap-1">
+                {link.label}
+                <IoArrowForward size={12} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
 
 export default function Experience() {
-  function getConsistentFontSize() {
-    const mobileSize = Math.max(14, MAX_FONT_SIZE * 0.75);
-
-    return {
-      fontSize: `clamp(${mobileSize}px, ${MAX_FONT_SIZE / 16}rem, ${MAX_FONT_SIZE}px)`,
-    };
-  }
-
-  function technologies(technologies: Array<string>) {
-    function div(index: number, icon: React.ReactNode, name: string) {
-      return (
-        <div key={index} className="pl-2 relative group">
-          {icon}
-          <Tooltip>{name}</Tooltip>
-        </div>
-      );
-    }
-
-    return technologies.map((technology, index) => {
-      switch (technology) {
-        case "lua":
-          return div(index, <SiLua />, "Lua");
-        case "docker":
-          return div(index, <SiDocker />, "Docker");
-        case "git":
-          return div(index, <SiGit />, "Git");
-        case "roblox":
-          return div(index, <SiRobloxstudio />, "Roblox Studio");
-        case "tradingview":
-          return div(index, <SiTradingview />, "TradingView");
-        case "pinescript":
-          return div(index, <SiPinescript />, "PineScript");
-        case "python":
-          return div(index, <SiPython />, "Python");
-        case "pandas":
-          return div(index, <SiPandas />, "Pandas");
-        case "numpy":
-          return div(index, <SiNumpy />, "NumPy");
-        case "aws":
-          return div(index, <FaAws />, "AWS");
-        case "datadog":
-          return div(index, <SiDatadog />, "Datadog");
-        case "latex":
-          return div(index, <SiLatex />, "LaTeX");
-        case "luau":
-          return div(index, <NamedIcon name="luau" />, "Luau");
-        default:
-          return div(index, <BiError />, technology);
-      }
-    });
-  }
-
-  function buttons(links: Array<string>) {
-    return links.map((link, index) => {
-      return <LinkButton key={index} index={index} link={link} tooltip="" />;
-    });
-  }
+  const featuredProjects = projects.filter((p) => p.featured);
+  const otherProjects = projects.filter((p) => !p.featured);
 
   return (
-    <div className="w-full">
-      <p className="text-center text-xs opacity-60 pt-[10px] -mb-[10px] sm:hidden">Rotate your device to see more details</p>
-      <div className="flex flex-wrap justify-center">
-        {experience.map((project, index) => {
-          return (
-            <Container key={index} className="w-[600px] m-4 self-center h-[350px] flex flex-col">
-              <Container className="h-[78px] flex flex-row" borders="b">
-                <Container className="min-w-[76px] h-full flex items-center justify-center" borders="r">
-                  {project.icon}
-                </Container>
-
-                <div className="relative w-full h-full flex items-center justify-start p-4">
-                  <b className="text-balance" style={getConsistentFontSize()}>
-                    {project.name}
-                  </b>
-                </div>
-              </Container>
-
-              <div className="flex-1 p-4 overflow-hidden relative">
-                <p className="text-justify">{project.desc}</p>
-                <p className="absolute bottom-4 left-4 opacity-60">{project.time}</p>
-                <div className="absolute bottom-4 right-4 hidden sm:flex flex-row text-2xl">{technologies(project.technologies || [])}</div>
-              </div>
-
-              {project.links && project.links.length > 0 && (
-                <Container className="h-[78px] flex flex-row" borders="t">
-                  {buttons(project.links)}
-                </Container>
-              )}
-            </Container>
-          );
-        })}
+    <div className="section">
+      {/* header */}
+      <div className="mb-12">
+        <p className="font-label text-[var(--accent)] mb-4">Work</p>
+        <h1 className="font-display text-3xl md:text-4xl mb-4">Projects & Experience</h1>
+        <p className="text-[var(--text-secondary)] max-w-xl">A mix of professional work, research, and personal projects spanning trading systems, game development, and developer tooling.</p>
       </div>
+
+      {/* featured work */}
+      <section className="mb-16">
+        <p className="font-label text-[var(--text-muted)] mb-6">Featured</p>
+        <div className="grid gap-6">
+          {featuredProjects.map((project, index) => (
+            <ProjectCard key={index} project={project} />
+          ))}
+        </div>
+      </section>
+
+      {/* other work */}
+      <section className="border-t border-[var(--border)] pt-12">
+        <p className="font-label text-[var(--text-muted)] mb-6">Other Work</p>
+        <div className="grid gap-6">
+          {otherProjects.map((project, index) => (
+            <ProjectCard key={index} project={project} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

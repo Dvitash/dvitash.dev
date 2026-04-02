@@ -3,29 +3,32 @@ import "../styles/globals.css";
 import { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 
-import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
-const ROBOTO_MONO = Roboto_Mono({ subsets: ["latin"] });
+const ROBOTO_MONO = Roboto_Mono({
+  subsets: ["latin"],
+  variable: "--font-roboto-mono",
+});
 
 export const metadata: Metadata = {
-  title: "Dvitash.Dev",
-  description: "Computer Scientist, Game Developer",
+  title: "Daniel Vitashkevich | Software Engineer",
+  description: "I build trading systems, developer tools, and games.",
 };
 
 export default function Root({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head></head>
+    <html lang="en" className={ROBOTO_MONO.variable}>
+      <body className="font-body bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased">
+        <div className="min-h-screen flex flex-col">
+          <Header />
 
-      <body className={ROBOTO_MONO.className}>
-        <Header />
-        <Sidebar />
+          <main className="flex-1 content-container">
+            {children}
+          </main>
 
-        <main className="flex items-center justify-center min-h-[calc(100vh-100px)]">{children}</main>
-
-        <Footer />
+          <Footer />
+        </div>
       </body>
     </html>
   );

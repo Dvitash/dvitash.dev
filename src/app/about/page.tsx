@@ -1,7 +1,8 @@
 import { SiGit, SiRobloxstudio, SiBlender, SiCplusplus, SiPython } from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
-import { NamedIcon } from "@/components/icon";
+import { FaJava } from "react-icons/fa";
 import Container from "@/components/container";
+import { NamedIcon } from "@/components/icon";
+import { VscVscode } from "react-icons/vsc";
 import { calculateAge } from "@/lib/utils";
 
 interface Skill {
@@ -52,7 +53,7 @@ const languageSkills: Array<Skill> = [
   {
     name: "Java",
     level: 80,
-    icon: <NamedIcon name="java" />,
+    icon: <FaJava />,
   },
 ];
 

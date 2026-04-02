@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 export default function Root({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-      </head>
+      <head></head>
 
       <body className={ROBOTO_MONO.className}>
         <Header />

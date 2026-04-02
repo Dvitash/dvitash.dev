@@ -33,7 +33,7 @@ const experience: Array<Experience> = [
     links: ["https://docs.google.com/spreadsheets/d/1ZkMmbKwuAI89oNNKozUIAiriOyR1O3F1xWMw0-agyEo/edit?usp=sharing"],
   },
   {
-    name: "Autotrader",
+    name: "Futures Autotrader",
     technologies: ["tradingview", "pinescript", "python"],
     time: "May 2023 - August 2023",
     icon: <MdAutoFixHigh size={56} />,
@@ -76,13 +76,40 @@ const experience: Array<Experience> = [
     ),
     links: ["https://www.researchgate.net/publication/394617605_AI-Enhanced_Deep_Neural_Network_Architecture_for_Accurate_Channel_Estimation_in_6G_Networks"],
   },
+  {
+    name: "Grow a Coral Reef",
+    technologies: ["roblox", "luau", "git"],
+    time: "Summer 2025",
+    icon: <SiRobloxstudio size={56} />,
+    desc: (
+      <>
+        Created a Roblox game that allows players to grow and decorate their own coral reef.{"\n"}
+        Developed custom growth algorithms and procedural animations for the coral growth process.{"\n"}
+        Full-stack development of the game, including server logic, client UI, and database integration.
+      </>
+    ),
+    links: ["https://www.roblox.com/games/74641514092935/Grow-a-Coral-Reef"],
+  },
+  {
+    name: "Ro-Bio Experiment Lead Developer",
+    technologies: ["roblox", "luau"],
+    time: "Summer 2024",
+    icon: <SiRobloxstudio size={56} />,
+    desc: (
+      <>
+        Lead developer for theg game "Ro-Bio Experiment".{"\n"}
+        Planned updates, managed the development team, and coordinated with the game's creator.{"\n"}
+        Contributed to the development of some of the game's core mechanics and systems.
+      </>
+    ),
+    links: ["https://www.roblox.com/games/15155782598/Ro-Bio"],
+  },
 ];
 
-const MAX_FONT_SIZE = 24; // Maximum font size constant for name fields
+const MAX_FONT_SIZE = 24;
 
 export default function Experience() {
   function getConsistentFontSize() {
-    // For mobile, scale down slightly but maintain proportions
     const mobileSize = Math.max(14, MAX_FONT_SIZE * 0.75);
 
     return {
@@ -126,6 +153,8 @@ export default function Experience() {
           return div(index, <SiDatadog />, "Datadog");
         case "latex":
           return div(index, <SiLatex />, "LaTeX");
+        case "luau":
+          return div(index, <NamedIcon name="luau" />, "Luau");
         default:
           return div(index, <BiError />, technology);
       }
@@ -134,7 +163,7 @@ export default function Experience() {
 
   function buttons(links: Array<string>) {
     return links.map((link, index) => {
-      return <LinkButton key={index} index={index} link={link} tooltip="Project website" />;
+      return <LinkButton key={index} index={index} link={link} tooltip="" />;
     });
   }
 

@@ -1,0 +1,516 @@
+{
+ "generatedAt": "2026-09-03T14:58:26.988977+00:00",
+ "range": "90d",
+ "overall": {
+  "totalRequests": 968950,
+  "successfulRequests": 966559,
+  "failedRequests": 2391,
+  "errorRate": 0.002467619588214046,
+  "totalInputTokens": 3976522602,
+  "totalOutputTokens": 288336261,
+  "totalCacheReadTokens": 99081227209,
+  "totalCacheWriteTokens": 8046514,
+  "cacheRate": 0.9614146184125635,
+  "cacheSavings": 0.8482246948330261,
+  "totalCost": 40800.15765070325,
+  "unpricedRequests": 0,
+  "totalPremiumRequests": 130394,
+  "avgDuration": 5074.8050487609,
+  "avgTtft": 2362.0730261783433,
+  "avgTokensPerSecond": 66.26806123518553,
+  "firstTimestamp": 1782054808939,
+  "lastTimestamp": 1788447155341
+ },
+ "timeSeries": [
+  {
+   "timestamp": 1782000000000,
+   "requests": 1109,
+   "errors": 1,
+   "tokens": 131445244,
+   "cost": 110.134275
+  },
+  {
+   "timestamp": 1782086400000,
+   "requests": 1546,
+   "errors": 0,
+   "tokens": 147412523,
+   "cost": 135.703935
+  },
+  {
+   "timestamp": 1782172800000,
+   "requests": 6409,
+   "errors": 28,
+   "tokens": 594113403,
+   "cost": 422.6135918
+  },
+  {
+   "timestamp": 1782259200000,
+   "requests": 5753,
+   "errors": 21,
+   "tokens": 605734403,
+   "cost": 411.56456765
+  },
+  {
+   "timestamp": 1782345600000,
+   "requests": 5827,
+   "errors": 70,
+   "tokens": 537214634,
+   "cost": 409.18973375
+  },
+  {
+   "timestamp": 1782432000000,
+   "requests": 5067,
+   "errors": 1,
+   "tokens": 634150904,
+   "cost": 587.8198086
+  },
+  {
+   "timestamp": 1782518400000,
+   "requests": 1184,
+   "errors": 3,
+   "tokens": 161269106,
+   "cost": 157.094428
+  },
+  {
+   "timestamp": 1782604800000,
+   "requests": 2876,
+   "errors": 2,
+   "tokens": 345480584,
+   "cost": 314.20991730000003
+  },
+  {
+   "timestamp": 1782691200000,
+   "requests": 3799,
+   "errors": 12,
+   "tokens": 464174521,
+   "cost": 352.6717787
+  },
+  {
+   "timestamp": 1782777600000,
+   "requests": 6087,
+   "errors": 3,
+   "tokens": 571553361,
+   "cost": 771.4850389000001
+  },
+  {
+   "timestamp": 1782864000000,
+   "requests": 3590,
+   "errors": 11,
+   "tokens": 350949894,
+   "cost": 280.250630225
+  },
+  {
+   "timestamp": 1782950400000,
+   "requests": 2648,
+   "errors": 6,
+   "tokens": 216536230,
+   "cost": 136.28585845
+  },
+  {
+   "timestamp": 1783296000000,
+   "requests": 3559,
+   "errors": 2,
+   "tokens": 241242844,
+   "cost": 253.46212185000002
+  },
+  {
+   "timestamp": 1783382400000,
+   "requests": 6210,
+   "errors": 0,
+   "tokens": 596329630,
+   "cost": 585.19005155
+  },
+  {
+   "timestamp": 1783468800000,
+   "requests": 2284,
+   "errors": 2,
+   "tokens": 228808165,
+   "cost": 109.741697625
+  },
+  {
+   "timestamp": 1783555200000,
+   "requests": 563,
+   "errors": 0,
+   "tokens": 27573320,
+   "cost": 36.16371256
+  },
+  {
+   "timestamp": 1783641600000,
+   "requests": 5203,
+   "errors": 7,
+   "tokens": 725760977,
+   "cost": 711.8251148
+  },
+  {
+   "timestamp": 1783728000000,
+   "requests": 2263,
+   "errors": 0,
+   "tokens": 223544569,
+   "cost": 322.4785528
+  },
+  {
+   "timestamp": 1783814400000,
+   "requests": 2834,
+   "errors": 0,
+   "tokens": 232115879,
+   "cost": 349.1934988
+  },
+  {
+   "timestamp": 1783900800000,
+   "requests": 226,
+   "errors": 0,
+   "tokens": 14461726,
+   "cost": 18.038334
+  },
+  {
+   "timestamp": 1784160000000,
+   "requests": 1307,
+   "errors": 0,
+   "tokens": 142565864,
+   "cost": 76.2711684
+  },
+  {
+   "timestamp": 1784246400000,
+   "requests": 12931,
+   "errors": 2,
+   "tokens": 1444816584,
+   "cost": 1140.079799575
+  },
+  {
+   "timestamp": 1784332800000,
+   "requests": 13129,
+   "errors": 0,
+   "tokens": 1387049829,
+   "cost": 721.80334705
+  },
+  {
+   "timestamp": 1784419200000,
+   "requests": 7099,
+   "errors": 0,
+   "tokens": 788723478,
+   "cost": 487.1871772
+  },
+  {
+   "timestamp": 1784505600000,
+   "requests": 5473,
+   "errors": 0,
+   "tokens": 556042763,
+   "cost": 280.968784275
+  },
+  {
+   "timestamp": 1784592000000,
+   "requests": 14586,
+   "errors": 5,
+   "tokens": 1370572159,
+   "cost": 649.27176865
+  },
+  {
+   "timestamp": 1784678400000,
+   "requests": 9641,
+   "errors": 5,
+   "tokens": 1175879060,
+   "cost": 446.978972475
+  },
+  {
+   "timestamp": 1784764800000,
+   "requests": 5068,
+   "errors": 7,
+   "tokens": 699158703,
+   "cost": 382.890668475
+  },
+  {
+   "timestamp": 1784851200000,
+   "requests": 5356,
+   "errors": 0,
+   "tokens": 798439652,
+   "cost": 544.310924275
+  },
+  {
+   "timestamp": 1784937600000,
+   "requests": 5850,
+   "errors": 6,
+   "tokens": 778917195,
+   "cost": 614.677919325
+  },
+  {
+   "timestamp": 1785024000000,
+   "requests": 1887,
+   "errors": 0,
+   "tokens": 256741865,
+   "cost": 189.21403925
+  },
+  {
+   "timestamp": 1785110400000,
+   "requests": 4989,
+   "errors": 14,
+   "tokens": 497639879,
+   "cost": 237.023097075
+  },
+  {
+   "timestamp": 1785196800000,
+   "requests": 5257,
+   "errors": 15,
+   "tokens": 420727270,
+   "cost": 164.45379815
+  },
+  {
+   "timestamp": 1785283200000,
+   "requests": 22362,
+   "errors": 9,
+   "tokens": 1835744405,
+   "cost": 983.55245715
+  },
+  {
+   "timestamp": 1785369600000,
+   "requests": 12759,
+   "errors": 1,
+   "tokens": 1134125033,
+   "cost": 564.840231225
+  },
+  {
+   "timestamp": 1785456000000,
+   "requests": 19659,
+   "errors": 3,
+   "tokens": 1714351523,
+   "cost": 978.13729927
+  },
+  {
+   "timestamp": 1785542400000,
+   "requests": 22952,
+   "errors": 32,
+   "tokens": 2011860208,
+   "cost": 412.17795975
+  },
+  {
+   "timestamp": 1785628800000,
+   "requests": 15474,
+   "errors": 2,
+   "tokens": 1440692297,
+   "cost": 590.6717831
+  },
+  {
+   "timestamp": 1785715200000,
+   "requests": 12713,
+   "errors": 3,
+   "tokens": 1242035179,
+   "cost": 203.75479889
+  },
+  {
+   "timestamp": 1785801600000,
+   "requests": 8581,
+   "errors": 18,
+   "tokens": 676334980,
+   "cost": 215.3159082832
+  },
+  {
+   "timestamp": 1785888000000,
+   "requests": 9232,
+   "errors": 6,
+   "tokens": 965318974,
+   "cost": 277.692052605
+  },
+  {
+   "timestamp": 1785974400000,
+   "requests": 9273,
+   "errors": 14,
+   "tokens": 1272797204,
+   "cost": 297.810456146
+  },
+  {
+   "timestamp": 1786060800000,
+   "requests": 11334,
+   "errors": 11,
+   "tokens": 1130590980,
+   "cost": 352.3871432728
+  },
+  {
+   "timestamp": 1786147200000,
+   "requests": 4722,
+   "errors": 1,
+   "tokens": 374371838,
+   "cost": 126.97076953999999
+  },
+  {
+   "timestamp": 1786233600000,
+   "requests": 27,
+   "errors": 0,
+   "tokens": 678419,
+   "cost": 0.8656617000000001
+  },
+  {
+   "timestamp": 1786320000000,
+   "requests": 6256,
+   "errors": 2,
+   "tokens": 527487056,
+   "cost": 308.9305958
+  },
+  {
+   "timestamp": 1786406400000,
+   "requests": 6741,
+   "errors": 586,
+   "tokens": 536578087,
+   "cost": 372.2709718348
+  },
+  {
+   "timestamp": 1786492800000,
+   "requests": 4222,
+   "errors": 2,
+   "tokens": 360716380,
+   "cost": 184.7192065
+  },
+  {
+   "timestamp": 1786579200000,
+   "requests": 18625,
+   "errors": 160,
+   "tokens": 1881597600,
+   "cost": 1237.5614176942
+  },
+  {
+   "timestamp": 1786665600000,
+   "requests": 8513,
+   "errors": 29,
+   "tokens": 884453249,
+   "cost": 103.8311239944
+  },
+  {
+   "timestamp": 1786752000000,
+   "requests": 8096,
+   "errors": 18,
+   "tokens": 742328838,
+   "cost": 123.169491253
+  },
+  {
+   "timestamp": 1786838400000,
+   "requests": 14799,
+   "errors": 23,
+   "tokens": 1432686213,
+   "cost": 552.0366256956
+  },
+  {
+   "timestamp": 1786924800000,
+   "requests": 54310,
+   "errors": 53,
+   "tokens": 7164644469,
+   "cost": 1253.6340800472
+  },
+  {
+   "timestamp": 1787011200000,
+   "requests": 4610,
+   "errors": 15,
+   "tokens": 881159507,
+   "cost": 74.71318659239999
+  },
+  {
+   "timestamp": 1787097600000,
+   "requests": 8771,
+   "errors": 109,
+   "tokens": 1336544774,
+   "cost": 235.417434168
+  },
+  {
+   "timestamp": 1787184000000,
+   "requests": 27849,
+   "errors": 23,
+   "tokens": 2924555099,
+   "cost": 378.493546543
+  },
+  {
+   "timestamp": 1787270400000,
+   "requests": 21528,
+   "errors": 254,
+   "tokens": 2038560993,
+   "cost": 959.296389328
+  },
+  {
+   "timestamp": 1787356800000,
+   "requests": 13699,
+   "errors": 146,
+   "tokens": 1161982893,
+   "cost": 553.370334755
+  },
+  {
+   "timestamp": 1787443200000,
+   "requests": 69546,
+   "errors": 112,
+   "tokens": 8271044890,
+   "cost": 3126.112070934
+  },
+  {
+   "timestamp": 1787529600000,
+   "requests": 52208,
+   "errors": 119,
+   "tokens": 6182723977,
+   "cost": 2915.994565772
+  },
+  {
+   "timestamp": 1787616000000,
+   "requests": 47311,
+   "errors": 77,
+   "tokens": 5406749844,
+   "cost": 2624.984007189
+  },
+  {
+   "timestamp": 1787702400000,
+   "requests": 47502,
+   "errors": 66,
+   "tokens": 4720425977,
+   "cost": 1712.313846537
+  },
+  {
+   "timestamp": 1787788800000,
+   "requests": 19704,
+   "errors": 33,
+   "tokens": 1301885562,
+   "cost": 412.331615012
+  },
+  {
+   "timestamp": 1787875200000,
+   "requests": 32227,
+   "errors": 11,
+   "tokens": 2450233588,
+   "cost": 1926.933310939
+  },
+  {
+   "timestamp": 1787961600000,
+   "requests": 61723,
+   "errors": 163,
+   "tokens": 7349716888,
+   "cost": 1165.065342074
+  },
+  {
+   "timestamp": 1788048000000,
+   "requests": 29790,
+   "errors": 2,
+   "tokens": 2345054949,
+   "cost": 581.317640907
+  },
+  {
+   "timestamp": 1788134400000,
+   "requests": 21648,
+   "errors": 1,
+   "tokens": 1588840586,
+   "cost": 497.87946670300005
+  },
+  {
+   "timestamp": 1788220800000,
+   "requests": 45863,
+   "errors": 10,
+   "tokens": 4391442622,
+   "cost": 833.1895239509761
+  },
+  {
+   "timestamp": 1788307200000,
+   "requests": 25611,
+   "errors": 18,
+   "tokens": 5158750544,
+   "cost": 782.582036444674
+  },
+  {
+   "timestamp": 1788393600000,
+   "requests": 7100,
+   "errors": 36,
+   "tokens": 1144497780,
+   "cost": 469.585187568
+  }
+ ]
+}

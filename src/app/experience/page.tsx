@@ -20,7 +20,7 @@ const projects: Project[] = [
     name: "Verde",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },
-      { icon: <NamedIcon name="luau" />, name: "Luau" },
+      { icon: <NamedIcon name="luau" dimmed />, name: "Luau" },
       { icon: <SiGit />, name: "Git" },
     ],
     time: "2025 - Present",
@@ -80,7 +80,7 @@ const projects: Project[] = [
     name: "Grow a Coral Reef",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },
-      { icon: <NamedIcon name="luau" />, name: "Luau" },
+      { icon: <NamedIcon name="luau" dimmed />, name: "Luau" },
     ],
     time: "Summer 2025",
     description: "Roblox game with custom growth algorithms and procedural coral animations. Full-stack development including server logic, client UI, and database integration.",
@@ -90,7 +90,7 @@ const projects: Project[] = [
     name: "Ro-Bio Experiment",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },
-      { icon: <NamedIcon name="luau" />, name: "Luau" },
+      { icon: <NamedIcon name="luau" dimmed />, name: "Luau" },
     ],
     time: "Summer 2024",
     description: "Lead developer managing team coordination and core system development. Planned updates and collaborated directly with the game creator.",

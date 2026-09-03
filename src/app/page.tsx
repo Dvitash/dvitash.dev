@@ -2,6 +2,9 @@ import Link from "next/link";
 import { SiTradingview, SiNasa, SiRobloxstudio } from "react-icons/si";
 import { fetchContributions } from "@/lib/github";
 import ContributionSquare from "@/components/contribution-square";
+import { fetchTokenActivity } from "@/lib/tokens";
+import { formatTokens } from "@/lib/token-format";
+import TokenBars from "@/components/token-bars";
 
 // featured projects for the homepage
 const selectedWork = [
@@ -27,7 +30,7 @@ const selectedWork = [
 ];
 
 export default async function Home() {
-  const contributions = await fetchContributions();
+  const [contributions, tokens] = await Promise.all([fetchContributions(), fetchTokenActivity()]);
 
   return (
     <div>
@@ -99,6 +102,15 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* token usage */}
+      <section className="section border-t border-[var(--border)]">
+        <div className="mb-6">
+          <p className="font-label text-[var(--text-muted)]">TOKEN USAGE · {formatTokens(tokens.totalTokens)} LAST 30D</p>
+        </div>
+        <div className="card p-4 overflow-x-auto">
+          <TokenBars bars={tokens.bars} />
+        </div>
+      </section>
       {/* quick about */}
       <section className="section border-t border-[var(--border)]">
         <div className="grid md:grid-cols-2 gap-8">

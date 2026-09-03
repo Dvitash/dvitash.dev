@@ -6,21 +6,26 @@ interface IconProps {
   size?: number;
   className?: string;
   tintWithAccent?: boolean;
+  dimmed?: boolean;
 }
 
-export default function Icon({ src, alt, size = 24, className, tintWithAccent = false }: IconProps) {
+export default function Icon({ src, alt, size = 24, className, tintWithAccent = false, dimmed = false }: IconProps) {
+  const filter = tintWithAccent
+    // Apply filter to match the accent color using CSS custom property
+    ? "brightness(0) saturate(100%) var(--icon-accent-filter)"
+    // Pull bright raster logos down to the muted icon tone
+    : dimmed
+      ? "brightness(0.46)"
+      : undefined;
   return (
     <div className={`flex items-center justify-center ${className || ""}`} style={{ width: size, height: size }}>
-      <Image 
-        src={src} 
-        alt={alt} 
-        width={size} 
-        height={size} 
+      <Image
+        src={src}
+        alt={alt}
+        width={size}
+        height={size}
         className="object-contain"
-        style={tintWithAccent ? {
-          // Apply filter to match the accent color using CSS custom property
-          filter: "brightness(0) saturate(100%) var(--icon-accent-filter)"
-        } : undefined}
+        style={filter ? { filter } : undefined}
       />
     </div>
   );
@@ -40,9 +45,10 @@ interface NamedIconProps {
   size?: number;
   className?: string;
   tintWithAccent?: boolean;
+  dimmed?: boolean;
 }
 
-export function NamedIcon({ name, size = 24, className, tintWithAccent = false }: NamedIconProps) {
+export function NamedIcon({ name, size = 24, className, tintWithAccent = false, dimmed = false }: NamedIconProps) {
   const icon = ICONS[name];
-  return <Icon src={icon.src} alt={icon.alt} size={size} className={className} tintWithAccent={tintWithAccent} />;
+  return <Icon src={icon.src} alt={icon.alt} size={size} className={className} tintWithAccent={tintWithAccent} dimmed={dimmed} />;
 }

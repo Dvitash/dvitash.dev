@@ -23,6 +23,21 @@ interface Project {
 
 const projects: Project[] = [
   {
+    name: "Resin AI",
+    technologies: [
+      { icon: <SiTypescript />, name: "TypeScript" },
+      { icon: <FaAws />, name: "AWS" },
+      { icon: <SiGit />, name: "Git" },
+    ],
+    time: "August 2026 - Present",
+    description: "Turns repeated coding-agent workflows into reusable, versioned tools served over a local MCP gateway. Works with Claude Code, Codex CLI, Cursor CLI and other agents; each tool runs within declared filesystem, network and secret limits, and prompts and source code stay on the local machine.",
+    links: [
+      { url: "https://resin.sh", label: "Website" },
+      { url: "https://github.com/Resin-AI/resin", label: "GitHub" },
+    ],
+    featured: true,
+  },
+  {
     name: "Verde",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },

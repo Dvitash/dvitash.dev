@@ -23,9 +23,10 @@ const selectedWork = [
     featured: true,
   },
   {
-    name: "Archipelago Analytics Intern",
+    name: "Archipelago Analytics Intern x2",
     tags: ["Python", "Data Science", "AWS"],
     description: "Engineered data pipeline solutions for property insurance document processing, shipping multiple production releases.",
+    link: "https://www.onarchipelago.com/",
   },
 ];
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiLatex, SiDatadog, SiNumpy, SiPandas, SiNasa, SiTradingview, SiPinescript, SiGit, SiRobloxstudio, SiPython } from "react-icons/si";
+import { SiLatex, SiDatadog, SiNumpy, SiPandas, SiNasa, SiTradingview, SiPinescript, SiGit, SiRobloxstudio, SiPython, SiTypescript, SiLua } from "react-icons/si";
 import { MdAutoFixHigh, MdSchool } from "react-icons/md";
 import { FaAws } from "react-icons/fa";
 import { BiError } from "react-icons/bi";
@@ -13,6 +13,10 @@ interface Project {
   description: string;
   links?: Array<{ url: string; label: string }>;
   featured?: boolean;
+  /** Roblox universe ID; the card shows its live visit count. */
+  universeId?: number;
+  /** GitHub "owner/name"; the card shows its live star count. */
+  repo?: string;
 }
 
 const projects: Project[] = [
@@ -77,14 +81,36 @@ const projects: Project[] = [
     description: "Automated execution system converting text alerts into live futures orders. Implemented complex order management with stop loss, take profit, and break-even adjustment.",
   },
   {
+    name: "Orca Contributor",
+    technologies: [
+      { icon: <SiTypescript />, name: "TypeScript" },
+      { icon: <SiGit />, name: "Git" },
+    ],
+    time: "2026",
+    description: "Merged three fixes to Orca, a desktop, mobile and remote workspace for running fleets of coding agents. Stopped terminal and worktree titles flickering for OMP sessions, locally and over remote runtimes.",
+    links: [{ url: "https://github.com/stablyai/orca/pulls?q=is%3Apr+author%3ADvitash+is%3Amerged", label: "PRs" }],
+    repo: "stablyai/orca",
+  },
+  {
+    name: "robloxstudio-mcp Contributor",
+    technologies: [
+      { icon: <SiLua />, name: "Lua" },
+      { icon: <SiRobloxstudio />, name: "Roblox Studio" },
+    ],
+    time: "2026",
+    description: "Merged three changes to an MCP server that lets AI agents debug, playtest and inspect Roblox Studio. Added rbxm import/export and memory snapshot tools, ran managed Studio under Wine on native Linux, and hardened Studio launch process identity.",
+    links: [{ url: "https://github.com/Chrrxs/robloxstudio-mcp/pulls?q=is%3Apr+author%3ADvitash+is%3Amerged", label: "PRs" }],
+    repo: "Chrrxs/robloxstudio-mcp",
+  },
+  {
     name: "Build the Titanic",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },
       { icon: <NamedIcon name="luau" dimmed />, name: "Luau" },
     ],
     time: "October 2026 - Present",
-    description: "Co-op Roblox game where the whole server carries crates to build the Titanic, then watches it sail. Each finished ship unlocks new training areas. Passed 100K visits within its first month.",
-    links: [{ url: "https://www.roblox.com/games/139388669928669/Build-the-Titanic", label: "Play" }],
+    description: "Co-op Roblox game where the whole server carries crates to build the Titanic, then watches it sail. Each finished ship unlocks new training areas.",
+    universeId: 10769868953,
   },
   {
     name: "Grow a Coral Reef",
@@ -94,7 +120,7 @@ const projects: Project[] = [
     ],
     time: "Summer 2025",
     description: "Roblox game with custom growth algorithms and procedural coral animations. Full-stack development including server logic, client UI, and database integration.",
-    links: [{ url: "https://www.roblox.com/games/74641514092935/Grow-a-Coral-Reef", label: "Play" }],
+    universeId: 7670673278,
   },
   {
     name: "Ro-Bio Experiment",
@@ -104,7 +130,7 @@ const projects: Project[] = [
     ],
     time: "Summer 2024",
     description: "Lead developer managing team coordination and core system development. Planned updates and collaborated directly with the game creator.",
-    links: [{ url: "https://www.roblox.com/games/15155782598/Ro-Bio", label: "Play" }],
+    universeId: 5224171262,
   },
 ];
 
@@ -117,14 +143,52 @@ function TechnologyBadge({ tech }: { tech: { icon: React.ReactNode; name: string
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+async function fetchVisits(universeIds: number[]): Promise<Map<number, number>> {
+  const visits = new Map<number, number>();
+  try {
+    const res = await fetch(`https://games.roblox.com/v1/games?universeIds=${universeIds.join(",")}`, { next: { revalidate: 3600 } });
+    if (!res.ok) return visits;
+    const body: { data: Array<{ id: number; visits: number }> } = await res.json();
+    for (const game of body.data) visits.set(game.id, game.visits);
+  } catch {
+    // Roblox API unreachable: cards render without a visit count.
+  }
+  return visits;
+}
+
+const visitFormat = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
+
+async function fetchStars(repos: string[]): Promise<Map<string, number>> {
+  const stars = new Map<string, number>();
+  await Promise.all(
+    repos.map(async (repo) => {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${repo}`, { next: { revalidate: 3600 } });
+        if (!res.ok) return;
+        const body: { stargazers_count: number } = await res.json();
+        stars.set(repo, body.stargazers_count);
+      } catch {
+        // GitHub unreachable: card renders without a star count.
+      }
+    }),
+  );
+  return stars;
+}
+
+function ProjectCard({ project, visits, stars }: { project: Project; visits: Map<number, number>; stars: Map<string, number> }) {
+  const visitCount = project.universeId ? visits.get(project.universeId) : undefined;
+  const starCount = project.repo ? stars.get(project.repo) : undefined;
   return (
     <article className={`card p-6 ${project.featured ? "md:p-8" : ""}`}>
       <div className="flex flex-col gap-4">
         {/* header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
           <h3 className="font-display text-xl md:text-2xl">{project.name}</h3>
-          <span className="font-label text-xs text-[var(--text-muted)] shrink-0">{project.time}</span>
+          <div className="flex flex-col sm:items-end gap-1 shrink-0">
+            <span className="font-label text-xs text-[var(--text-muted)]">{project.time}</span>
+            {visitCount !== undefined && <span className="font-label text-xs text-[var(--accent)]">{visitFormat.format(visitCount)} visits</span>}
+            {starCount !== undefined && <span className="font-label text-xs text-[var(--accent)]">{visitFormat.format(starCount)} stars</span>}
+          </div>
         </div>
 
         {/* description */}
@@ -153,9 +217,13 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export default function Experience() {
+export default async function Experience() {
   const featuredProjects = projects.filter((p) => p.featured);
   const otherProjects = projects.filter((p) => !p.featured);
+  const [visits, stars] = await Promise.all([
+    fetchVisits(projects.flatMap((p) => (p.universeId ? [p.universeId] : []))),
+    fetchStars(projects.flatMap((p) => (p.repo ? [p.repo] : []))),
+  ]);
 
   return (
     <div className="section">
@@ -171,7 +239,7 @@ export default function Experience() {
         <p className="font-label text-[var(--text-muted)] mb-6">Featured</p>
         <div className="grid gap-6">
           {featuredProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} project={project} visits={visits} stars={stars} />
           ))}
         </div>
       </section>
@@ -181,7 +249,7 @@ export default function Experience() {
         <p className="font-label text-[var(--text-muted)] mb-6">Other Work</p>
         <div className="grid gap-6">
           {otherProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} project={project} visits={visits} stars={stars} />
           ))}
         </div>
       </section>

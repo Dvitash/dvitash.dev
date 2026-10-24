@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -24,8 +25,9 @@ export default function Header() {
         {/* logo */}
         <Link
           href="/"
-          className="font-display text-lg tracking-tight hover:text-[var(--accent)] transition-colors"
+          className="flex items-center gap-2.5 font-display text-lg tracking-tight hover:text-[var(--accent)] transition-colors"
         >
+          <Image src="/icon.svg" alt="" width={24} height={24} priority />
           dvitash.dev
         </Link>
 

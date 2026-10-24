@@ -15,6 +15,8 @@ interface Project {
   featured?: boolean;
   /** Roblox universe ID; the card shows its live visit count. */
   universeId?: number;
+  /** Fixed visit count for a game the Roblox API no longer reports. */
+  visitCount?: number;
   /** GitHub "owner/name"; the card shows its live star count. */
   repo?: string;
 }
@@ -58,7 +60,7 @@ const projects: Project[] = [
     featured: true,
   },
   {
-    name: "Archipelago Analytics Intern",
+    name: "Archipelago Analytics Intern x2",
     technologies: [
       { icon: <SiPython />, name: "Python" },
       { icon: <SiPandas />, name: "Pandas" },
@@ -66,7 +68,7 @@ const projects: Project[] = [
       { icon: <FaAws />, name: "AWS" },
       { icon: <SiDatadog />, name: "Datadog" },
     ],
-    time: "Summer 2025",
+    time: "Summer 2025 - Present",
     description: "Built and optimized data processing pipelines for property insurance documents. Deployed 3 production releases with improved extraction accuracy.",
     links: [{ url: "https://www.onarchipelago.com/", label: "Company" }],
   },
@@ -130,7 +132,7 @@ const projects: Project[] = [
     ],
     time: "Summer 2024",
     description: "Lead developer managing team coordination and core system development. Planned updates and collaborated directly with the game creator.",
-    universeId: 5224171262,
+    visitCount: 110_000_000,
   },
 ];
 
@@ -176,7 +178,7 @@ async function fetchStars(repos: string[]): Promise<Map<string, number>> {
 }
 
 function ProjectCard({ project, visits, stars }: { project: Project; visits: Map<number, number>; stars: Map<string, number> }) {
-  const visitCount = project.universeId ? visits.get(project.universeId) : undefined;
+  const visitCount = project.visitCount ?? (project.universeId ? visits.get(project.universeId) : undefined);
   const starCount = project.repo ? stars.get(project.repo) : undefined;
   return (
     <article className={`card p-6 ${project.featured ? "md:p-8" : ""}`}>

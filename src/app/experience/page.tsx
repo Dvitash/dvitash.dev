@@ -77,6 +77,16 @@ const projects: Project[] = [
     description: "Automated execution system converting text alerts into live futures orders. Implemented complex order management with stop loss, take profit, and break-even adjustment.",
   },
   {
+    name: "Build the Titanic",
+    technologies: [
+      { icon: <SiRobloxstudio />, name: "Roblox Studio" },
+      { icon: <NamedIcon name="luau" dimmed />, name: "Luau" },
+    ],
+    time: "October 2026 - Present",
+    description: "Co-op Roblox game where the whole server carries crates to build the Titanic, then watches it sail. Each finished ship unlocks new training areas. Passed 100K visits within its first month.",
+    links: [{ url: "https://www.roblox.com/games/139388669928669/Build-the-Titanic", label: "Play" }],
+  },
+  {
     name: "Grow a Coral Reef",
     technologies: [
       { icon: <SiRobloxstudio />, name: "Roblox Studio" },
